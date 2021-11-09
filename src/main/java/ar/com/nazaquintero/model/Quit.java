@@ -14,7 +14,7 @@ public class Quit implements Command{
     }
 
     @Override
-    public void execute(String arg) {
+    public void execute(String arg, Element element) {
 
     }
 }

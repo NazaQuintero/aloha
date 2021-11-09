@@ -1,6 +1,5 @@
 import ar.com.nazaquintero.exceptions.UnrecognizedCommand;
-import ar.com.nazaquintero.model.Command;
-import ar.com.nazaquintero.model.CommandMultiton;
+import ar.com.nazaquintero.model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +9,10 @@ public class Application {
     public static void main(String[] args) throws IOException, UnrecognizedCommand {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+        Directory rootDirectory = new Directory(null, "root");
+
         CommandMultiton commandMultiton = CommandMultiton.getInstance();
+
         String text = reader.readLine();
         String[] commandArgs = text.split(" ");
         String commandName = commandArgs[0];
@@ -19,22 +21,25 @@ public class Application {
         if (commandArgs.length > 1)
             commandArg = commandArgs[1];
 
-        Command command = commandMultiton.getInstanceOf(commandName);
+        try {
+            Command command = commandMultiton.getInstanceOf(commandName);
+            while(!command.shouldStopExecution()) {
+                command.execute(commandArg, rootDirectory);
 
-        while(!command.shouldStopExecution()) {
-            System.out.println(command.getName());
-            command.execute(commandArg);
+                text = reader.readLine();
+                commandArgs = text.split(" ");
+                commandName = commandArgs[0];
 
-            text = reader.readLine();
-            commandArgs = text.split(" ");
-            commandName = commandArgs[0];
+                commandArg = "";
 
-            commandArg = "";
+                if (commandArgs.length > 1)
+                    commandArg = commandArgs[1];
 
-            if (commandArgs.length > 1)
-                commandArg = commandArgs[1];
-
-            command = commandMultiton.getInstanceOf(commandName);
+                command = commandMultiton.getInstanceOf(commandName);
+            }
+        } catch (UnrecognizedCommand e) {
+            System.out.println(e);
         }
+
     }
 }

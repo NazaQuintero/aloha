@@ -1,11 +1,11 @@
 package ar.com.nazaquintero.model;
 
-import java.util.List;
 
-public class CurrentDirectory implements Command{
+import java.util.ArrayList;
+
+public class CurrentDirectory implements Command {
 
     private String name = "pwd";
-    private List<String> fullPath = List.of("");
 
     @Override
     public boolean shouldStopExecution() {
@@ -18,8 +18,9 @@ public class CurrentDirectory implements Command{
     }
 
     @Override
-    public void execute(String arg) {
-        for(String path: fullPath) System.out.print(path + "/");
+    public void execute(String arg, Element root) {
+        ArrayList<String> stackDirectories = new ArrayList<>();
+        root.getCurrentElement().printStackedDirectories(stackDirectories);
         System.out.println();
     }
 }

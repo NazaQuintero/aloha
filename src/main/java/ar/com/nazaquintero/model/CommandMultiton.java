@@ -15,7 +15,7 @@ public class CommandMultiton {
         commandsAvailable.put("quit", new Quit());
         commandsAvailable.put("pwd", new CurrentDirectory());
         commandsAvailable.put("ls", new ListContents());
-        commandsAvailable.put("ls -r", new ListContentsRecursive());
+        commandsAvailable.put("ls -r", new ListContentsRecursive(new CurrentDirectory(), new ListContents()));
         commandsAvailable.put("mkdir", new MakeDirectory());
         commandsAvailable.put("cd", new ChangeDirectory());
         commandsAvailable.put("touch", new CreateFile());

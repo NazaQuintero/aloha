@@ -4,5 +4,5 @@ public interface Command {
 
     boolean shouldStopExecution();
     String getName();
-    void execute(String arg);
+    void execute(String arg, Element root);
 }

@@ -1,5 +1,7 @@
 package ar.com.nazaquintero.model;
 
+import java.util.HashMap;
+
 public class ListContents implements Command{
 
     private String name = "ls";
@@ -15,7 +17,8 @@ public class ListContents implements Command{
     }
 
     @Override
-    public void execute(String arg) {
-
+    public void execute(String arg, Element root) {
+        HashMap<String, Element> subElements = root.getCurrentElement().getSubElements();
+        subElements.entrySet().forEach(element -> System.out.println(element.getValue().toString()));
     }
 }
